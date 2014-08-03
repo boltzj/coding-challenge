@@ -52,7 +52,6 @@ class Robot:
         if self.direction == 'N':
             self.y += 1
 
-
 board = Board(10, 10)
 
 board.print_board()
