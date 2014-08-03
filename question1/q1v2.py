@@ -8,7 +8,6 @@ class Game():
         self.shuffle_table = list(range(0, size_of_deck))
         self.round = 0
 
-
         table_deck = list()
         deck = list(range(0, len(self.deck)))
 
@@ -22,7 +21,6 @@ class Game():
 
         for x in range(0, size_of_deck):
             self.shuffle_table[x] = table_deck[x]
-
 
     def do_round(self):
 
@@ -53,10 +51,11 @@ class Game():
     def print_deck(self):
         print(self.deck)
 
+
 def run():
 
     # New Game
-    game = Game(200)
+    game = Game(313)
 
     # Start First round
     start_time = time()
@@ -70,5 +69,5 @@ def run():
     end_time = time()
     print(game.round, '(computed in ', end_time - start_time, ')')
 
-cProfile.run('run()')
-# run()
+# cProfile.run('run()')
+run()
