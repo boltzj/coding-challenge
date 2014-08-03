@@ -1,44 +1,44 @@
 from time import time
-import array
 import cProfile
 
 
 class Game():
-    deck = list()
-    original_deck = list()
-    nb_round = 0
-
     def __init__(self, size_of_deck):
-        self.deck = list(range(1, size_of_deck + 1))
-        self.table = list(range(1, size_of_deck + 1))
+        self.deck = list(range(0, size_of_deck))
+        self.shuffle_table = list(range(0, size_of_deck))
+        self.round = 0
+
 
         table_deck = list()
-        deck = list(range(1, len(self.deck) + 1))
+        deck = list(range(0, len(self.deck)))
 
         while len(deck):
-            # Step a : Take the top card off the deck and set it on the table
+            # Step 1 : Take the top card off the deck and set it on the table
             table_deck.append(deck.pop())
 
             if len(deck):
+                # Step 2 : Take the next card off the top of desk and put it on the bottom of the deck in your hand.
                 deck.insert(0, deck.pop())
 
         for x in range(0, size_of_deck):
-            self.table[x] = table_deck[x]
+            self.shuffle_table[x] = table_deck[x]
+
 
     def do_round(self):
-        # Table will be the new deck at the end of the round
-        new_deck = list(range(1, len(self.deck)))
 
+        # This deck will be the new deck at the end of the round
+        table_deck = list(range(0, len(self.deck)))
+
+        # Use the shuffle table to make the new deck
         for x in range(0, len(self.deck)):
-            i = self.table[x]
-            new_deck[i] = 0#self.deck[x]
+            table_deck[self.shuffle_table[x]] = self.deck[x]
 
-        self.deck = new_deck
-        self.nb_round += 1
-
+        # Set the new deck
+        self.deck = table_deck
+        self.round += 1
 
     def is_over(self):
-        start = 1
+        start = 0
 
         for card in self.deck:
             if card == start:
@@ -60,18 +60,15 @@ def run():
 
     # Start First round
     start_time = time()
-    i = 1
     game.do_round()
 
     # Try to go back to original deck
     while not game.is_over():
         game.do_round()
-        i += 1
-        # print(i)
 
     # Print Result
     end_time = time()
-    print(i, '(computed in ', end_time - start_time, ')')
+    print(game.round, '(computed in ', end_time - start_time, ')')
 
-# cProfile.run('run()')
-run()
+cProfile.run('run()')
+# run()
