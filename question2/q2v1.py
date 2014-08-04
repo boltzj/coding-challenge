@@ -2,6 +2,7 @@ __author__ = 'boltz_j'
 
 directions = "NESW"
 
+
 def parse_input_file(filename):
     # Open the input file
     file = open(filename)
@@ -33,7 +34,7 @@ class Robot:
         self.direction = direction
 
     def action(self, command):
-        # Iterate on every char
+        # Iterate on every char of the command string
         for cmd in command:
             if cmd == "L":
                 self.left()
