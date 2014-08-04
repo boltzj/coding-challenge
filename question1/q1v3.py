@@ -11,7 +11,6 @@ class Game():
         """
         self.deck = list(range(size_of_deck))
         self.shuffle_table = list(range(size_of_deck))
-        self.round = 0
 
         table_deck = list()
         deck = list(range(size_of_deck))
@@ -33,32 +32,30 @@ class Game():
         """
         :return: Return the number of round to come back to the initial deck
         """
-        # If compute had been already been called, reinitialize round count
-        if self.round == 0:
+        # Two decks to use alternatively
+        decks = [list(self.deck), list(self.deck)]
+        round = 0
 
-            # Two decks to use alternatively
-            decks = [list(self.deck), list(self.deck)]
+        # Shuffle card until going back to original deck
+        while True:
+            # Select decks
+            deck = decks[(round + 1) % 2]
+            new_deck = decks[round % 2]
 
-            # Shuffle card until going back to original deck
-            while True:
+            # Use the shuffle table to make the new deck
+            for x in deck:
+                new_deck[self.shuffle_table[x]] = deck[x]
 
-                new_deck = decks[self.round % 2]
-                
-                # Use the shuffle table to make the new deck
-                for x in self.deck:
-                    new_deck[self.shuffle_table[x]] = self.deck[x]
+            round += 1
 
-                # Set the new deck
-                self.deck = new_deck
-                self.round += 1
-
-                if self.is_over():
-                    break
+            if self.is_over(new_deck):
+                break
 
         # Return the number of round to come back to the original order
-        return self.round
+        return round
 
-    def is_over(self):
+    @staticmethod
+    def is_over(deck):
         """
         :return: Return true if the game deck is at initial status, False otherwise
         """
@@ -66,7 +63,7 @@ class Game():
         expected_value = 0
 
         # Iterate on card value
-        for card in self.deck:
+        for card in deck:
             if card == expected_value:
                 # Increment expected value and continue
                 expected_value += 1
@@ -75,9 +72,6 @@ class Game():
                 return False
         # Deck is at the initial status
         return True
-
-    def print_deck(self):
-        print(self.deck)
 
 
 def run(size_of_deck):
