@@ -1,5 +1,6 @@
 from time import time
 
+
 class Game():
     def __init__(self, size_of_deck):
         """
