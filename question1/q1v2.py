@@ -17,6 +17,7 @@ class Game():
         table_deck = list()
         deck = list(range(size_of_deck))
 
+        # Compute the lookup table
         while deck:
             # Step 1 : Take the top card off the deck and set it on the table
             table_deck.append(deck.pop())
@@ -25,12 +26,35 @@ class Game():
                 # Step 2 : Take the next card off the top of desk and put it on the bottom of the deck in your hand.
                 deck.insert(0, deck.pop())
 
+        # Store the position of the card after one round as the lookup table
         for x in range(size_of_deck):
             self.shuffle_table[x] = table_deck[x]
 
-    def do_round(self):
+    def compute(self):
+        """
+        :return: Return the number of round to come back to the initial deck
+        """
+        # If compute had been already been called, reinitialize
+        if self.round:
+            self.__init__(len(self.deck))
 
+        # Start First round
+        self.do_round()
+
+        # Try to go back to original deck
+        while not self.is_over():
+            self.do_round()
+
+        # Return the number of round to come back to the original order
+        return self.round
+
+    def do_round(self):
+        """
+        do_round() execute one shuffle round on the deck
+        :return:
+        """
         # This deck will be the new deck at the end of the round
+        # Optimization: we replace list(range(len(self.deck))) by a memory copy of the actual deck
         table_deck = list(self.deck)
 
         # Use the shuffle table to make the new deck
@@ -42,38 +66,40 @@ class Game():
         self.round += 1
 
     def is_over(self):
-        start = 0
+        """
+        :return: Return true if the game deck is at initial status, False otherwise
+        """
+        # First card value (We assumed that first card value is 0)
+        expected_value = 0
 
+        # Iterate on card value
         for card in self.deck:
-            if card == start:
-                start += 1
+            if card == expected_value:
+                # Increment expected value and continue
+                expected_value += 1
             else:
+                # Deck is not as the initial status
                 return False
+        # Deck is at the initial status
         return True
-
-        # FIXME
-        # return self.deck == sorted(self.deck)
 
     def print_deck(self):
         print(self.deck)
 
 
-def run():
+def run(size_of_deck):
+    # Record start time
+    start_time = time()
 
     # New Game
-    game = Game(170)
+    game = Game(size_of_deck)
 
-    # Start First round
-    start_time = time()
-    game.do_round()
-
-    # Try to go back to original deck
-    while not game.is_over():
-        game.do_round()
+    # Compute the number of rounds
+    rounds = game.compute()
 
     # Print Result
     end_time = time()
-    print(game.round, '(computed in ', end_time - start_time, ')')
+    print(rounds, '(computed in ', end_time - start_time, ')')
 
-# cProfile.run('run()')
-run()
+# cProfile.run('run(300)')
+run(290)
