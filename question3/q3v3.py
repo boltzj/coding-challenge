@@ -4,7 +4,6 @@ __author__ = 'boltz_j'
 
 import os.path
 import sys
-import re
 
 if len(sys.argv) < 2:
     print('Usage: \'' + sys.argv[0], 'log_file\'')
@@ -22,9 +21,9 @@ for line in open(sys.argv[1]):
     # Split the line with space char
     buffer = line.split()
 
-    # Grab the information from regex
-    service = re.search("^(.*?)\[(.*?)\]", buffer[4]).group(1)
-    user = re.search("^\((.*?)\)", buffer[5]).group(1)
+    # Extract data
+    service = buffer[4].split('[')[0]
+    user = buffer[5][1:-1]
     command = buffer[6]
 
     # Save extracted data in dict
