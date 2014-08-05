@@ -1,3 +1,8 @@
+#!/usr/bin/python
+
+__author__ = 'boltz_j'
+
+import sys
 from time import time
 
 
@@ -86,19 +91,30 @@ class Game():
         print(self.deck)
 
 
-def run(size_of_deck):
-    # Record start time
-    start_time = time()
+def main(argv):
+    if not argv[0]:
+        sys.exit(1)
+
+    try:
+        size_of_deck = int(argv[0])
+    except ValueError:
+        print('Error:', argv[0], 'is not a valid input')
+        sys.exit(1)
 
     # New Game
     game = Game(size_of_deck)
 
-    # Compute the number of rounds
+    # Get start time
+    start_time = time()
+
+    # Find the solution
     rounds = game.compute()
 
     # Print Result
     end_time = time()
-    print(rounds, '(computed in ', end_time - start_time, ')')
+    print(rounds, 'rounds (computed in ', end_time - start_time, ')')
 
-# cProfile.run('run(300)')
-run(290)
+    sys.exit(0)
+
+if __name__ == "__main__":
+   main(sys.argv[1:])

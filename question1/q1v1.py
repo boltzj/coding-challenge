@@ -1,5 +1,9 @@
+#!/usr/bin/python
+
+__author__ = 'boltz_j'
+
+import sys
 from time import time
-import cProfile
 
 
 class Game():
@@ -24,6 +28,8 @@ class Game():
         # Try to go back to original deck
         while not self.is_over():
             self.do_round()
+
+        return self.round
 
     def do_round(self):
         """
@@ -60,7 +66,16 @@ class Game():
         print(self.deck)
 
 
-def run(size_of_deck):
+def main(argv):
+    if not argv[0]:
+        sys.exit(1)
+
+    try:
+        size_of_deck = int(argv[0])
+    except ValueError:
+        print('Error:', argv[0], 'is not a valid input')
+        sys.exit(1)
+
     # New Game
     game = Game(size_of_deck)
 
@@ -68,11 +83,13 @@ def run(size_of_deck):
     start_time = time()
 
     # Find the solution
-    game.compute()
+    rounds = game.compute()
 
     # Print Result
     end_time = time()
-    print(game.round, '(computed in ', end_time - start_time, ')')
+    print(rounds, 'rounds (computed in ', end_time - start_time, ')')
 
-# cProfile.run('run()')
-run(290)
+    sys.exit(0)
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
