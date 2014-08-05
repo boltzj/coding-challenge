@@ -4,11 +4,14 @@ import re
 
 data = dict()
 
-for line in open('test.log'):
+# for line in open('test-100M.log'):
+for line in open('test-2G.log'):
+    # Split the line with space char
     buffer = line.split()
-    # service = buffer[4].split('[')[0]
-    service = re.search("(.*?)\[(.*?)\]", buffer[4]).group(1)
-    user = re.search("\((.*?)\)", buffer[5]).group(1)
+
+    # Grab the information
+    service = re.search("^(.*?)\[(.*?)\]", buffer[4]).group(1)
+    user = re.search("^\((.*?)\)", buffer[5]).group(1)
     command = buffer[6]
 
     if (service, user, command) not in data:
