@@ -18,7 +18,7 @@ You have a deck containing X number of cards. While holding the deck, do the fol
 
 >**This is a round.** 
 
-Pick up the deck and repeat steps (a), (b), ( c ) until the deck is in the original order. 
+Pick up the deck and repeat steps (a), (b), (c) until the deck is in the original order. 
 
 Write a program to determine how many rounds it will take to put the deck back in original order. Please make sure the program can take a command line argument for number of cards in deck. We will test the solution with different sizes of decks e.g. 100, 200, 300, 313. 
 
@@ -77,8 +77,8 @@ Write a tool that will prepare a table with each line containing:
     service userid command number-of-times-the-command-occurs-in-syslog
 
 For example, for input:  
-<code>
-    Dec 10 07:17:01 ip-10-198-43-75 CRON[19220]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
+```
+    Dec 10 07:17:01 ip-10-198-43-75 CRON[19220]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)      
     Dec 10 08:17:01 ip-10-198-43-75 CRON[30306]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
     Dec 10 09:17:01 ip-10-198-43-75 CRON[9098]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
     Dec 10 10:17:01 ip-10-198-43-75 CRON[20128]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
@@ -86,7 +86,7 @@ For example, for input:
     Dec 10 12:17:01 ip-10-198-43-75 CRON[9881]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
     Dec 10 13:17:01 ip-10-198-43-75 CRON[20902]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
     Dec 10 14:17:01 ip-10-198-43-75 CRON[31972]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)  
-</code>
+```
 
 The output would be:
     CRON  root  CMD 8
